@@ -80,33 +80,7 @@ static double AddItemD(double total, KeyValuePair<char, int> item)
             }
 
             return cost
-
         }
-        //This is your original code
-//         private static double AddItemC(double total, KeyValuePair<char, int> item)
-//         {
-//             if (item.Key.Equals('C'))
-//             {
-//                 total += 15 * item.Value;
-//             }
-
-//             return total;
-//         }
-
-//         public double AddB(string numberItems)
-//         {
-//             double items = Double.Parse(numberItems);
-
-//             if(items == 0) return 0;
-
-//             var cost = items * 30;
-//                 var numberOfPairs =  items / 2;
-
-//             // discount is 15 on each pair
-//             var discount = numberOfPairs * 15;
-//             return cost - discount;
-//         }
-        
 
         public void Scan(string items)
         {
