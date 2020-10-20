@@ -16,19 +16,17 @@ namespace Checkout
         public double Total() 
         { 
             double total = 0;
+            double noOfItemsC = 0;
             foreach(var item in _items)
             {
-                if(item.Key.Equals('A'))
+                if(item.Key.Equals('A') || item.Key.Equals('B'))
                 {
-                    total += 50 * item.Value;
+                    //total += 50 * item.Value;
+                    total += DiscountItems(item.Value.ToString(), item)
                 }
-                else if(item.Key.Equals('B'))
-                {
-                    total += AddB(item.Value.ToString());
-                } 
                 else if(item.Key.Equals('C'))
                 {
-                    total = AddItemC(total, item);
+                    total = AddItemC(total, item, noOfItemsC);
                 }
                 else total = AddItemD(total, item);
             } 
@@ -45,29 +43,43 @@ static double AddItemD(double total, KeyValuePair<char, int> item)
     return total;
 }
 
-
-        private static double AddItemC(double total, KeyValuePair<char, int> item)
+        private static double AddItemC(double total, KeyValuePair<char, int> item, double noOfItemsC)
         {
-            if (item.Key.Equals('C'))
+            if(noOfItemsC <= 6)
             {
                 total += 15 * item.Value;
             }
-
             return total;
         }
 
-        public double AddB(string numberItems)
+
+        public double DiscountItems(string numberItems, KeyValuePair<char, int> nameItems)
         {
             double items = Double.Parse(numberItems);
-
+            var cost = 0
             if(items == 0) return 0;
 
-            var cost = items * 30;
-                var numberOfPairs =  items / 2;
+            if(nameItems.Key.Equals(‘A’))
+            {
+                cost = items * 50;
+                var itemADiscount = items / 3;
 
-            // discount is 15 on each pair
-            var discount = numberOfPairs * 15;
-            return cost - discount;
+                //discount is 20 on every three items
+                var discount = itemADiscount * 20
+                cost -=  discount
+            }
+
+            else if(nameItems.Key.Equals(‘B’))
+            {
+                cost = items * 30;
+                var numberOfPairs = items / 2;
+
+                //discount is 15 on each pair
+                var discount = numberOfPairs * 15
+                cost -= discount
+            }
+
+            return cost
         }
 
         public void Scan(string items)
